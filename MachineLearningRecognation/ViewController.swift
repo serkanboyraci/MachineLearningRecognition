@@ -37,7 +37,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         // you can add info window from info.plist, you already know it.
         
         if let ciImage = CIImage(image: imageView.image!) { // we change UIImage to CIImage
-            chosenImage = ciImage
+            chosenImage = ciImage // first we define as a variable
             
         }
         
