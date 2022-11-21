@@ -46,6 +46,29 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func recognizeImage(image: CIImage) {
+        //1.request
+        //2.handler
+        
+        if let model = try? VNCoreMLModel(for: MobileNetV2().model) { //you define your downloaded model
+            let request = VNCoreMLRequest(model: model) { (vnrequest, error) in
+                
+                if let results = vnrequest.results as? [VNClassificationObservation] { // we need VnClassificationObservation object, we cast it
+                    if results.count > 0 { // we control there is any result
+                        
+                        let topResult = results.first // we need to take first top result
+                        
+                        DispatchQueue.main.async {
+                            //
+                            let confidenceLevel = (topResult?.confidence ?? 0) * 100 // we try to learn confidence level
+                            
+                            self.resultLabel.text = "\(confidenceLevel)% it`s \(topResult!.identifier)"
+                        }
+                    }
+                }
+            }
+        }
+        
+        
         
     }
     
